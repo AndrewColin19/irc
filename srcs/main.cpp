@@ -1,12 +1,5 @@
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/socket.h>
-#include <stdlib.h>
-#include <netinet/in.h>
-#include <string.h>
 
+#include "Server.hpp"
 
 int main(int ac, char **av)
 {
@@ -16,19 +9,13 @@ int main(int ac, char **av)
         return 0;
     }
     int port = std::atoi(av[1]);
-    std::string password = av[2];
-    int sock = socket(AF_LOCAL, SOCK_STREAM, 0);
-    struct sockaddr_in addr;
-    addr.sin_family = AF_INET;
-    addr.sin_addr.s_addr = INADDR_ANY;
-    addr.sin_port = htons(port);
-    int addrlen =  sizeof(addr);
-    bind(sock, (struct sockaddr *) &addr, addrlen);
-    while (1)
+    std::string p = av[1];
+    if (port < 0 || port > 65535 || !std::all_of(p.begin(), p.end(), ::isdigit))
     {
-        if (listen(sock, 1))
-            accept(sock, (struct sockaddr *) &addr, (socklen_t*) &addrlen);
+        std::cout << "Error : Port invalid." << std::endl;
+        return 0;
     }
-
+    Server *s = new Server(av[1], av[2]);
+    s->start();
     return 1;
 }
