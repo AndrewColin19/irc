@@ -26,7 +26,7 @@ class Server
         fd_set set;
         fd_set save;
         int max_fd;
-        std::map<int, Client> users;
+        std::map<int, Client*> users;
         sockaddr address;
         socklen_t addr_len;
         void create_connection();
@@ -99,7 +99,13 @@ void Server::check_action()
             users.erase(users.find(fd));
         }
         else
-            std::cout << "User : " << " send : " << std::string(buff) << std::endl;//Traiter la commande
+        {
+            std::string str(buff);
+            if (users[fd]->isNew())
+                users[fd]->setUsername(str);
+            else
+                std::cout << "User : " << users[fd]->getUsername() << " send : " << str << std::endl;//Traiter la commande
+        }
     }
 }
 
@@ -110,7 +116,7 @@ void Server::create_connection()
     if (client > max_fd)
         max_fd = client;
     FD_SET(client, &set);
-    users.insert(std::pair<int, Client>(client, Client()));
+    users.insert(std::pair<int, Client*>(client, new Client()));
 }
 
 #endif
