@@ -63,14 +63,22 @@ void Server::start()
 
 void Server::check_action()
 {
-    if (users.find("TOTO") == users.end())
+    char buff[MAX_MSIZE];
+    ssize_t nbread = 0;
+    std::string user;
+    for (std::map<std::string, int>::iterator i = users.begin(); i != users.end(); i++)
+    {
+        int fd = (*i).second;
+        user = (*i).first;
+        nbread = recv(fd, buff, MAX_MSIZE, 0);
+        if (nbread != 0)
+            break ;
+    }
+    if (nbread == 0)
         create_connection();
     else
     {
-        char buff[MAX_MSIZE];
-        int nbread = recv(users["TOTO"], buff, MAX_MSIZE, 0);
-        std::string cmd = buff;
-        std::cout << cmd << std::endl;
+        std::cout << "User : " << user << " send : " << std::string(buff) << std::endl;
     }
 }
 
