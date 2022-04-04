@@ -18,7 +18,7 @@ class Server
         fd_set save;
         int max_fd;
         std::map<int, Client*> users;
-        std::vector<Channel> chan;
+        std::map<std::string, Channel*> chan;
         sockaddr address;
         socklen_t addr_len;
         void create_connection();
@@ -96,7 +96,7 @@ void Server::check_action()
             if (users[fd]->isNew())
                 users[fd]->setUsername(str);
             else
-                std::cout << "User : " << users[fd]->getUsername() << " send : " << str << std::endl;//Traiter la commande
+                std::cout << str;//std::cout << "User : " << users[fd]->getUsername() << " send : " << str << std::endl;//Traiter la commande
         }
     }
 }
@@ -109,6 +109,11 @@ void Server::create_connection()
         max_fd = client;
     FD_SET(client, &set);
     users.insert(std::pair<int, Client*>(client, new Client()));
+
+    char buff[MAX_MSIZE];
+    int nbread = recv(client, buff, MAX_MSIZE, 0);
+    std::string str(buff);
+    std::cout << str;
 }
 
 #endif
