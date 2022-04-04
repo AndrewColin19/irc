@@ -3,7 +3,7 @@
 #define __CHANNEL_HPP
 
 #include "includes.h"
-#include <Client.hpp>
+#include "Client.hpp"
 
 class Channel
 {

@@ -1,6 +1,4 @@
 #pragma once
-#ifndef __INCLUDES_H
-#define __INCLUDES_H
 
 #include <iostream>
 #include <string>
@@ -15,4 +13,4 @@
 #include <map>
 #include <vector>
 
-#endif
+using namespace std;
