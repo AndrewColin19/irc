@@ -2,18 +2,9 @@
 #ifndef __SERVER_HPP
 #define __SERVER_HPP
 
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <stdlib.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <netdb.h>
-#include <map>
+#include "includes.h"
 #include "Client.hpp"
+#include "Channel.hpp"
 
 #define MAX_MSIZE 2048
 
@@ -27,6 +18,7 @@ class Server
         fd_set save;
         int max_fd;
         std::map<int, Client*> users;
+        std::vector<Channel> chan;
         sockaddr address;
         socklen_t addr_len;
         void create_connection();

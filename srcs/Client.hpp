@@ -2,16 +2,7 @@
 #ifndef __CLIENT_HPP
 #define __CLIENT_HPP
 
-#include <iostream>
-#include <string>
-#include <unistd.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <stdlib.h>
-#include <netinet/in.h>
-#include <string.h>
-#include <netdb.h>
+#include "includes.h"
 
 class Client
 {
