@@ -118,19 +118,13 @@ void Server::initUser(string str, int fd)
     size_t pos;
     string user;
 
-    if (str.find("CAP") == string::npos)
-        return ;
-    if ((pos = str.find("PASS")) == string::npos)
-        return ;
-    if (str.substr(pos + 5, this->password.length()) != this->password)
-        return ;
     if ((pos = str.find("NICK")) == string::npos)
         return ;
-    //cout << pos << "    " << str.find("\r", pos);
-    if (this->userExist((user = str.substr(pos + 5, str.find("\n", pos)))) && user.length() >= 1) 
+    user = str.substr(pos + 5, str.find("USER") - 2);
+    if (this->userExist(user) || user.length() <= 1) 
         return ;
     users[fd]->setUsername(user);
-    send(fd, "001 acolin :Welcome to the Internet Relay Network acolin\n", strlen("001 acolin :Welcome to the Internet Relay Network acolin\n"), 0);
+    send(fd, "001 lmataris :Welcome to the Internet Relay Network lmataris\n", strlen("001 lmataris :Welcome to the Internet Relay Network lmataris\n"), 0);
 }
 
 int Server::userExist(string user)
@@ -143,16 +137,19 @@ int Server::userExist(string user)
 
 void Server::create_connection()
 {
+    char buff[MAX_MSIZE];
+    std::string str;
+    size_t pos;
     int client = accept(sock, &address, &addr_len);
+
+    recv(client, buff, MAX_MSIZE, 0);
+    str = buff;
+    if ((pos = str.find("PASS")) == string::npos || str.substr(pos + 5, this->password.length()) != this->password)
+        return ;
     if (client > max_fd)
         max_fd = client;
     FD_SET(client, &set);
     users.insert(std::pair<int, Client*>(client, new Client()));
-
-    char buff[MAX_MSIZE];
-    int nbread = recv(client, buff, MAX_MSIZE, 0);
-    std::string str(buff);
-    std::cout << str;
 }
 
 #endif
