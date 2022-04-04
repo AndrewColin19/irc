@@ -5,6 +5,7 @@
 #include "includes.h"
 #include "Client.hpp"
 #include "Channel.hpp"
+#include "Command.hpp"
 
 #define MAX_MSIZE 2048
 
@@ -27,6 +28,8 @@ class Server
     public:
         Server(char *port, std::string password);
         void start();
+        void initUser(string str, int fd);
+        int userExist(string user);
         ~Server();
 };
 
@@ -92,18 +95,54 @@ void Server::check_action()
         }
         else
         {
-            std::string str(buff);
+			std::string str(buff);
+            /*std::string delimiter = "\n";
+
+            size_t pos = 0;
+            std::string c;
+            while ((pos = str.find(delimiter)) != std::string::npos) {
+                c = str.substr(0, pos);
+                Command cmd = Command(c);
+                str.erase(0, pos + delimiter.length());
+            }*/
             if (users[fd]->isNew())
-                users[fd]->setUsername(str);
+                this->initUser(str, fd);
             else
-                std::cout << str;//std::cout << "User : " << users[fd]->getUsername() << " send : " << str << std::endl;//Traiter la commande
+                std::cout << "User : " << users[fd]->getUsername() << " send : " << str << std::endl;//Traiter la commande*/
         }
     }
 }
 
+void Server::initUser(string str, int fd)
+{
+    size_t pos;
+    string user;
+
+    if (str.find("CAP") == string::npos)
+        return ;
+    if ((pos = str.find("PASS")) == string::npos)
+        return ;
+    if (str.substr(pos + 5, this->password.length()) != this->password)
+        return ;
+    if ((pos = str.find("NICK")) == string::npos)
+        return ;
+    //cout << pos << "    " << str.find("\r", pos);
+    if (this->userExist((user = str.substr(pos + 5, str.find("\n", pos)))) && user.length() >= 1) 
+        return ;
+    users[fd]->setUsername(user);
+    send(fd, "001 acolin :Welcome to the Internet Relay Network acolin\n", strlen("001 acolin :Welcome to the Internet Relay Network acolin\n"), 0);
+}
+
+int Server::userExist(string user)
+{
+    for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
+        if(it->second->getUsername() == user)
+            return (1);
+    return (0);
+}
+
 void Server::create_connection()
 {
-    std::cout << "TOTO\n";
     int client = accept(sock, &address, &addr_len);
     if (client > max_fd)
         max_fd = client;
