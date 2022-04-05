@@ -23,13 +23,14 @@ class Server
         sockaddr address;
         socklen_t addr_len;
         void create_connection();
-        void check_action();
+        void check_action(Command *cmd);
         int  get_fd();
     public:
         Server(char *port, std::string password);
         void start();
         void initUser(string str, int fd);
         int userExist(string user);
+        string getPassword();
         ~Server();
 };
 
@@ -54,11 +55,12 @@ void Server::start()
     FD_ZERO(&save);
     FD_SET(sock, &set);
     max_fd = sock;
+    Command *cmd = new Command(this);
     while (1)
     {
         save = set;
         select(max_fd + 1, &save, NULL, NULL, NULL);
-        check_action();
+        check_action(cmd);
     }
 }
 
@@ -75,7 +77,7 @@ int Server::get_fd()
     return (i);
 }
 
-void Server::check_action()
+void Server::check_action(Command *cmd)
 {
     char buff[MAX_MSIZE];
     ssize_t nbread = 0;
@@ -95,24 +97,19 @@ void Server::check_action()
         }
         else
         {
-			std::string str(buff);
-            /*std::string delimiter = "\n";
-
             size_t pos = 0;
             std::string c;
-            while ((pos = str.find(delimiter)) != std::string::npos) {
+            string str(buff);
+            while ((pos = str.find('\n')) != std::string::npos)
+            {
                 c = str.substr(0, pos);
-                Command cmd = Command(c);
-                str.erase(0, pos + delimiter.length());
-            }*/
-            if (users[fd]->isNew())
-                this->initUser(str, fd);
-            else
-                std::cout << "User : " << users[fd]->getUsername() << " send : " << str << std::endl;//Traiter la commande*/
+                str.erase(0, pos + 1);
+                cmd->getCommand(c, users[fd]);
+            }
         }
     }
 }
-
+/*
 void Server::initUser(string str, int fd)
 {
     size_t pos;
@@ -125,6 +122,11 @@ void Server::initUser(string str, int fd)
         return ;
     users[fd]->setUsername(user);
     send(fd, "001 lmataris :Welcome to the Internet Relay Network lmataris\n", strlen("001 lmataris :Welcome to the Internet Relay Network lmataris\n"), 0);
+}*/
+
+string Server::getPassword()
+{
+    return password;
 }
 
 int Server::userExist(string user)
@@ -137,19 +139,11 @@ int Server::userExist(string user)
 
 void Server::create_connection()
 {
-    char buff[MAX_MSIZE];
-    std::string str;
-    size_t pos;
     int client = accept(sock, &address, &addr_len);
-
-    recv(client, buff, MAX_MSIZE, 0);
-    str = buff;
-    if ((pos = str.find("PASS")) == string::npos || str.substr(pos + 5, this->password.length()) != this->password)
-        return ;
     if (client > max_fd)
         max_fd = client;
     FD_SET(client, &set);
-    users.insert(std::pair<int, Client*>(client, new Client()));
+    users.insert(std::pair<int, Client*>(client, new Client(client)));
 }
 
 #endif

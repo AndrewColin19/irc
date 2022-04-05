@@ -3,7 +3,7 @@ NAME= ircserv
 CFLAGS= -Wall -Wextra -Werror -std=c++98
 CC= c++
 
-SRCS= srcs/main.cpp
+SRCS= srcs/main.cpp srcs/Command.cpp
 OBJS= $(SRCS:.cpp=.o)
 
 all: $(NAME)
