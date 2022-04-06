@@ -1,38 +1,4 @@
-#pragma once
-#ifndef __SERVER_HPP
-#define __SERVER_HPP
-
-#include "includes.h"
-#include "Client.hpp"
-#include "Channel.hpp"
-#include "Command.hpp"
-
-#define MAX_MSIZE 2048
-
-class Server
-{
-    private:
-        int sock;
-        struct addrinfo *addr;
-        std::string password;
-        fd_set set;
-        fd_set save;
-        int max_fd;
-        std::map<int, Client*> users;
-        std::map<std::string, Channel*> chan;
-        sockaddr address;
-        socklen_t addr_len;
-        void create_connection();
-        void check_action(Command *cmd);
-        int  get_fd();
-    public:
-        Server(char *port, std::string password);
-        void start();
-        void initUser(string str, int fd);
-        int userExist(string user);
-        string getPassword();
-        ~Server();
-};
+#include "Server.hpp"
 
 Server::Server(char *port, std::string password)
 {
@@ -43,7 +9,10 @@ Server::Server(char *port, std::string password)
 	hints.ai_flags = AI_PASSIVE;
     getaddrinfo("127.0.0.1", port, &hints, &addr);
     this->password = password;
-    addr_len = sizeof address;
+
+    cmdManager.add("PASS", new CommandPass(this));
+
+    chanManager.add("#Bienvenue");
 }
 
 void Server::start()
@@ -55,12 +24,11 @@ void Server::start()
     FD_ZERO(&save);
     FD_SET(sock, &set);
     max_fd = sock;
-    Command *cmd = new Command(this);
     while (1)
     {
         save = set;
         select(max_fd + 1, &save, NULL, NULL, NULL);
-        check_action(cmd);
+        check_action();
     }
 }
 
@@ -77,7 +45,7 @@ int Server::get_fd()
     return (i);
 }
 
-void Server::check_action(Command *cmd)
+void Server::check_action()
 {
     char buff[MAX_MSIZE];
     ssize_t nbread = 0;
@@ -104,7 +72,7 @@ void Server::check_action(Command *cmd)
             {
                 c = str.substr(0, pos);
                 str.erase(0, pos + 1);
-                cmd->getCommand(c, users[fd]);
+                cmdManager.exec(str, users[fd]);
             }
         }
     }
@@ -139,11 +107,12 @@ int Server::userExist(string user)
 
 void Server::create_connection()
 {
+    sockaddr address;
+    socklen_t addr_len;
+    addr_len = sizeof address;
     int client = accept(sock, &address, &addr_len);
     if (client > max_fd)
         max_fd = client;
     FD_SET(client, &set);
     users.insert(std::pair<int, Client*>(client, new Client(client)));
 }
-
-#endif

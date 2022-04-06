@@ -1,6 +1,4 @@
 #pragma once
-#ifndef __CLIENT_HPP
-#define __CLIENT_HPP
 
 #include "includes.h"
 
@@ -67,5 +65,3 @@ void Client::connect()
 {
     this->is_connected = 1;
 }
-
-#endif

@@ -1,6 +1,14 @@
-#include "Command.hpp"
+#include "Commands/CommandPass.hpp"
 
-int Command::pass(Client *c)
+CommandPass::CommandPass(Server *srv)
+{
+    this->s = srv;
+}
+
+CommandPass::~CommandPass()
+{}
+
+int CommandPass::exec(Client *c)
 {
     if (c->isConnected())
         return c->sendMessage(462, "User already logged");
