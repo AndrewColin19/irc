@@ -1,9 +1,9 @@
 #pragma once
-
 #include "includes.h"
 #include "../Server.hpp"
 #include "../Client.hpp"
 
+class Server;
 class Command
 {
     protected:
