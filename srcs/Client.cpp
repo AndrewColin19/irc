@@ -34,11 +34,12 @@ int Client::getFd()
     return fd;
 }
 
-int Client::sendMessage(int err_code, string msg)
+int Client::sendMessage(string err_code, string msg)
 {
-    string c;
-    c = ":ft_irc " + to_string(err_code) + " " + this->username + ":" + msg + "\n";
-    send(fd, c.c_str(), sizeof c.c_str(), 0);
+    stringstream c;
+
+    c << ":ft_irc " << err_code << " " << this->username << ":" << msg << "\n";
+    send(fd, c.str().c_str(), c.str().length(), 0);
     return 1;
 }
 

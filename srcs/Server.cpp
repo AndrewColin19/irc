@@ -72,7 +72,7 @@ void Server::check_action()
             {
                 c = str.substr(0, pos);
                 str.erase(0, pos + 1);
-                cmdManager.exec(str, users[fd]);
+                cmdManager.exec(c, users[fd]);
             }
         }
     }

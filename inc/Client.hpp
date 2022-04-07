@@ -10,7 +10,7 @@ class Client
         int fd;
     public:
         Client(int fd);
-        int sendMessage(int err_code, string msg);
+        int sendMessage(string err_code, string msg);
         void setUsername(std::string username);
         std::string getUsername();
         int isNew();

@@ -16,5 +16,14 @@ int CommandManager::exec(string str, Client *c)
     string cmd;
 
     cmd = str.substr(0, str.find(' '));
+    try
+    {
+        cmds.at(cmd);
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Command invalid" << '\n';
+        return 1;
+    }
     return (cmds[cmd]->getCommand(str, c));
 }
