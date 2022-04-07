@@ -3,6 +3,9 @@
 CommandManager::CommandManager()
 {}
 
+CommandManager::~CommandManager()
+{}
+
 void CommandManager::add(string str, Command *c)
 {
     cmds.insert(pair<string, Command*>(str, c));
