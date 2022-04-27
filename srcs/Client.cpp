@@ -1,11 +1,12 @@
 #include "Client.hpp"
 
 
-Client::Client(int fd)
+Client::Client(int fd, struct sockaddr address)
 {
     is_new = 1;
     is_connected = 0;
     this->fd = fd;
+    this->address = address;
 }
 
 void Client::setUsername(std::string username)
@@ -17,6 +18,36 @@ void Client::setUsername(std::string username)
 std::string Client::getUsername()
 {
     return username;
+}
+
+void Client::setHostname(std::string hostname)
+{
+    this->hostname = hostname;
+}
+
+std::string Client::getHostname()
+{
+    return hostname;
+}
+
+void Client::setRealname(std::string realname)
+{
+    this->realname = realname;
+}
+
+std::string Client::getRealname()
+{
+    return realname;
+}
+
+void Client::setNickname(std::string nickname)
+{
+    this->nickname = nickname;
+}
+
+std::string Client::getNickname()
+{
+    return this->nickname;
 }
 
 int Client::isNew()
@@ -43,7 +74,21 @@ int Client::sendMessage(string err_code, string msg)
     return 1;
 }
 
+int Client::sendRawMessage(std::string message)
+{
+    send(this->fd, message.c_str(), message.length(), 0);
+    return 1;
+}
+
 void Client::connect()
 {
     this->is_connected = 1;
+}
+
+std::string	Client::to_string(bool isAnon) const
+{
+    if (isAnon)
+		return ":anonymous!anonymous@anonymous";
+    cout << this->address.sa_data << endl;
+	return (":" + this->nickname + "!" + this->username + "@");
 }

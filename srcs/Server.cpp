@@ -11,6 +11,7 @@ Server::Server(char *port, std::string password)
     this->password = password;
 
     cmdManager.add("PASS", new CommandPass(this));
+    cmdManager.add("USER", new CommandUser(this));
 
     chanManager.add("#Bienvenue");
 }
@@ -97,6 +98,16 @@ string Server::getPassword()
     return password;
 }
 
+std::map<std::string, Channel*> Server::getChannels()
+{
+    return this->chan;
+}
+
+std::map<int, Client*> Server::getClients()
+{
+    return this->users;
+}
+
 int Server::userExist(string user)
 {
     for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
@@ -114,5 +125,5 @@ void Server::create_connection()
     if (client > max_fd)
         max_fd = client;
     FD_SET(client, &set);
-    users.insert(std::pair<int, Client*>(client, new Client(client)));
+    users.insert(std::pair<int, Client*>(client, new Client(client, address)));
 }

@@ -5,6 +5,7 @@
 #include "Channel.hpp"
 #include "Commands/CommandManager.hpp"
 #include "Commands/CommandPass.hpp"
+#include "Commands/CommandUser.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048
@@ -29,6 +30,8 @@ class Server
         Server(char *port, std::string password);
         void start();
         int userExist(string user);
+        std::map<std::string, Channel*> getChannels();
+        std::map<int, Client*> getClients();
         string getPassword();
         ~Server();
 };

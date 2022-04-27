@@ -1,8 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <sstream>
-#include <string> 
+#include <string>
 #include <unistd.h>
 #include <stdio.h>
 #include <sys/types.h>
@@ -13,6 +12,5 @@
 #include <netdb.h>
 #include <map>
 #include <vector>
-#include "message.hpp"
 
 using namespace std;
