@@ -16,7 +16,6 @@ int Command::getCommand(string str, Client *c)
     pos = str.find(' ');
     this->cmd = str.substr(0, pos);
     str.erase(0, pos);
-    cout << str << endl;
     istringstream iss(str);
     vector<string> results((istream_iterator<string>(iss)), istream_iterator<string>());
     argv = results;

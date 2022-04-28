@@ -13,13 +13,14 @@ void CommandManager::add(string str, Command *c)
 
 int CommandManager::exec(string str, Client *c)
 {
-    cout << str << endl;
     string cmd;
 
+    cout << str << endl;
     cmd = str.substr(0, str.find(' '));
     try
     {
-        cmds.at(cmd);
+        if (cmd != "CAP LS")
+            cmds.at(cmd);
     }
     catch(const std::exception& e)
     {

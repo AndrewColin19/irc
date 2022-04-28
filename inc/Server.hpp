@@ -7,6 +7,8 @@
 #include "Commands/CommandPass.hpp"
 #include "Commands/CommandUser.hpp"
 #include "Commands/CommandNick.hpp"
+#include "Commands/CommandPing.hpp"
+#include "Commands/CommandQuit.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048

@@ -9,7 +9,6 @@ CommandUser::~CommandUser() {}
 
 int CommandUser::exec(Client *c)
 {
-	cout << "USER" << endl;
 	if (c->isConnected())
 		return !c->sendMessage(ERR_ALREADYREGISTRED, "Unauthorized command (already registered)");
 

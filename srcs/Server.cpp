@@ -13,6 +13,8 @@ Server::Server(char *port, std::string password)
     cmdManager.add("PASS", new CommandPass(this));
     cmdManager.add("USER", new CommandUser(this));
     cmdManager.add("NICK", new CommandNick(this));
+    cmdManager.add("PING", new CommandPing(this));
+    cmdManager.add("QUIT", new CommandQuit(this));
 
     chanManager.add("#Bienvenue");
 }
