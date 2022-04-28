@@ -7,7 +7,7 @@ SRCS=	srcs/Server.cpp srcs/main.cpp srcs/Commands/Command.cpp \
 		srcs/Commands/CommandPass.cpp srcs/Commands/CommandManager.cpp \
 		srcs/Channel.cpp srcs/Client.cpp srcs/ChannelManager.cpp \
 		srcs/Commands/CommandUser.cpp srcs/Commands/CommandNick.cpp \
-		srcs/Commands/CommandPing.cpp srcs/Commands/CommandQuit.cpp
+		srcs/Commands/CommandPing.cpp srcs/Commands/CommandQuit.cpp srcs/Commands/CommandMode.cpp
 OBJS= $(SRCS:.cpp=.o)
 
 all: $(NAME)
