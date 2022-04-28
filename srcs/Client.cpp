@@ -1,7 +1,9 @@
 #include "Client.hpp"
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
 
-
-Client::Client(int fd, struct sockaddr address)
+Client::Client(int fd, struct sockaddr_in address)
 {
     is_new = 1;
     is_connected = 0;
@@ -70,6 +72,7 @@ int Client::sendMessage(string err_code, string msg)
     stringstream c;
 
     c << ":ft_irc " << err_code << " " << this->username << ":" << msg << "\n";
+    cout << c.str() << endl;
     send(fd, c.str().c_str(), c.str().length(), 0);
     return 1;
 }
@@ -80,15 +83,23 @@ int Client::sendRawMessage(std::string message)
     return 1;
 }
 
+std::string Client::getAddress() const
+{ 
+    return inet_ntoa(this->address.sin_addr); 
+}
+
 void Client::connect()
 {
-    this->is_connected = 1;
+    if (this->is_connected != 1)
+    {
+        this->is_connected = 1;
+        sendMessage(RPL_WELCOME, " Welcome to the Internet Relay Network " + to_string(false));
+    }
 }
 
 std::string	Client::to_string(bool isAnon) const
 {
     if (isAnon)
 		return ":anonymous!anonymous@anonymous";
-    cout << this->address.sa_data << endl;
-	return (":" + this->nickname + "!" + this->username + "@");
+	return (":" + this->nickname + "!" + this->username + "@" + this->getAddress());
 }

@@ -12,6 +12,7 @@ Server::Server(char *port, std::string password)
 
     cmdManager.add("PASS", new CommandPass(this));
     cmdManager.add("USER", new CommandUser(this));
+    cmdManager.add("NICK", new CommandNick(this));
 
     chanManager.add("#Bienvenue");
 }
@@ -118,10 +119,10 @@ int Server::userExist(string user)
 
 void Server::create_connection()
 {
-    sockaddr address;
+    struct sockaddr_in address;
     socklen_t addr_len;
     addr_len = sizeof address;
-    int client = accept(sock, &address, &addr_len);
+    int client = accept(sock, (struct sockaddr *) &address, &addr_len);
     if (client > max_fd)
         max_fd = client;
     FD_SET(client, &set);

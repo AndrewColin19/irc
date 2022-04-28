@@ -13,6 +13,7 @@ void CommandManager::add(string str, Command *c)
 
 int CommandManager::exec(string str, Client *c)
 {
+    cout << str << endl;
     string cmd;
 
     cmd = str.substr(0, str.find(' '));

@@ -9,18 +9,19 @@ CommandUser::~CommandUser() {}
 
 int CommandUser::exec(Client *c)
 {
+	cout << "USER" << endl;
 	if (c->isConnected())
-		return !c->sendMessage("462", ":Unauthorized command (already registered)");
+		return !c->sendMessage(ERR_ALREADYREGISTRED, "Unauthorized command (already registered)");
 
-	if (this->argv.size() < 5)
-		return !c->sendMessage("461", ":Not enough parameters");
+	if (this->argv.size() < 3)
+		return !c->sendMessage(ERR_NEEDMOREPARAMS, "Not enough parameters");
 
 	if (c->getUsername() == "")
 	{
-		c->setUsername(this->argv[1]);
-		c->setHostname(this->argv[3]);
-		c->setRealname(this->argv[4]);
+		c->setUsername(this->argv[0]);
+		c->setHostname(this->argv[2]);
+		c->setRealname(this->str);
 	}
-
+	c->connect();
 	return 0;
 }
