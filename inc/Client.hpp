@@ -11,6 +11,7 @@ class Client
         int is_new;
         int is_connected;
         int fd;
+        map<char, bool> modes;
         int oper;
         struct sockaddr_in address;
     public:
@@ -29,6 +30,7 @@ class Client
         int isOper();
         std::string	getAddress(void) const;
         int isNew();
+        void setMode(string mode);
         int isConnected();
         int getFd();
         void connect();
