@@ -7,6 +7,7 @@ Client::Client(int fd, struct sockaddr_in address)
 {
     is_new = 1;
     is_connected = 0;
+    oper = 0;
     this->fd = fd;
     this->address = address;
 }
@@ -102,4 +103,14 @@ std::string	Client::to_string(bool isAnon) const
     if (isAnon)
 		return ":anonymous!anonymous@anonymous";
 	return (":" + this->nickname + "!" + this->username + "@" + this->getAddress());
+}
+
+void Client::setOper(int b)
+{
+    oper = b;
+}
+
+int Client::isOper()
+{
+    return oper;
 }

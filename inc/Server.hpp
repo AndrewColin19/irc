@@ -9,6 +9,7 @@
 #include "Commands/CommandNick.hpp"
 #include "Commands/CommandPing.hpp"
 #include "Commands/CommandQuit.hpp"
+#include "Commands/CommandOper.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048
@@ -19,6 +20,7 @@ class Server
         int sock;
         struct addrinfo *addr;
         std::string password;
+        std::string opass;
         fd_set set;
         fd_set save;
         int max_fd;
@@ -30,12 +32,13 @@ class Server
         void check_action();
         int  get_fd();
     public:
-        Server(char *port, std::string password);
+        Server(char *port, std::string password, std::string opass);
         void start();
         int userExist(string user);
         std::map<std::string, Channel*> getChannels();
         std::map<int, Client*> getClients();
         int removeClient(int fd);
         string getPassword();
+        string getOPassword();
         ~Server();
 };
