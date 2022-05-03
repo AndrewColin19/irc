@@ -107,10 +107,39 @@ std::string	Client::to_string(bool isAnon) const
 
 void Client::setOper(int b)
 {
+    if (oper && b)
+        return ;
+    if (!oper && !b)
+        return ;
+    if (oper && !b)
+        setMode("-o");
+    if (!oper && b)
+        setMode("+o");
     oper = b;
 }
 
 int Client::isOper()
 {
     return oper;
+}
+
+void Client::setMode(string mode)
+{
+    char c;
+    c = mode[1];
+
+    if (mode[0] == '+')
+    {
+        if (modes.find(c) == modes.end())
+            modes.insert(pair<char, bool>(c, true));
+        else
+            modes[c] = true;
+    }
+    else
+    {
+        if (modes.find(c) == modes.end())
+            modes.insert(pair<char, bool>(c, false));
+        else
+            modes[c] = false;
+    }
 }
