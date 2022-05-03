@@ -35,6 +35,7 @@ class Server
         int userExist(string user);
         std::map<std::string, Channel*> getChannels();
         std::map<int, Client*> getClients();
+        int removeClient(int fd);
         string getPassword();
         ~Server();
 };

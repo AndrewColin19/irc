@@ -111,6 +111,16 @@ std::map<int, Client*> Server::getClients()
     return this->users;
 }
 
+int Server::removeClient(int fd)
+{
+    if (this->users.at(fd))
+    {
+        this->users.erase(fd);
+        return (1);
+    }
+    return (0);
+}
+
 int Server::userExist(string user)
 {
     for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
