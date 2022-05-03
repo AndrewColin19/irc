@@ -105,41 +105,30 @@ std::string	Client::to_string(bool isAnon) const
 	return (":" + this->nickname + "!" + this->username + "@" + this->getAddress());
 }
 
-void Client::setOper(int b)
-{
-    if (oper && b)
-        return ;
-    if (!oper && !b)
-        return ;
-    if (oper && !b)
-        setMode("-o");
-    if (!oper && b)
-        setMode("+o");
-    oper = b;
-}
-
 int Client::isOper()
 {
-    return oper;
+    return (modes.find('o') == modes.end() ? 0 : (modes['o'] ? 1 : 0));
 }
 
-void Client::setMode(string mode)
+void Client::setMode(char mode, int add)
 {
-    char c;
-    c = mode[1];
-
-    if (mode[0] == '+')
+    if (add)
     {
-        if (modes.find(c) == modes.end())
-            modes.insert(pair<char, bool>(c, true));
+        if (modes.find(mode) == modes.end())
+            modes.insert(pair<char, bool>(mode, true));
         else
-            modes[c] = true;
+            modes[mode] = true;
     }
     else
     {
-        if (modes.find(c) == modes.end())
-            modes.insert(pair<char, bool>(c, false));
+        if (modes.find(mode) == modes.end())
+            modes.insert(pair<char, bool>(mode, false));
         else
-            modes[c] = false;
+            modes[mode] = false;
     }
+}
+
+map<char, bool> Client::getMode()
+{
+    return modes;
 }

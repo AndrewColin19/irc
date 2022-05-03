@@ -11,6 +11,6 @@ class ChannelManager
     public:
         ChannelManager();
         ~ChannelManager();
-        void add(string name);
+        void add(string name, Client *c);
         void join(string name, Client *c);
 };

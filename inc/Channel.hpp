@@ -11,10 +11,12 @@ class Channel
         map<char, bool> modes;
         std::vector<Client*> users;
     public:
-        Channel(string name);
+        Channel(string name, Client *c);
         ~Channel();
         bool isIn(string username);
-        void setMode(string mode);
+        void setMode(char mode, int add);
         void join(Client *c);
         void kick(std::string username);
+        map<char, bool> getMode();
+        Client *getCreator();
 };

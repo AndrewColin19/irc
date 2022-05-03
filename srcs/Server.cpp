@@ -19,7 +19,7 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("OPER", new CommandOper(this));
     cmdManager.add("KICK", new CommandKick(this));
 
-    chanManager.add("#Bienvenue");
+    chanManager.add("#Bienvenue", NULL);
 }
 
 void Server::start()

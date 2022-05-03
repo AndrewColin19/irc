@@ -1,8 +1,9 @@
 #include "Channel.hpp"
 
-Channel::Channel(string name)
+Channel::Channel(string name, Client *c)
 {
     this->name = name;
+    creator = c;
 }
 
 Channel::~Channel()
@@ -36,23 +37,30 @@ void Channel::kick(std::string username)
     }
 }
 
-void Channel::setMode(string mode)
+void Channel::setMode(char mode, int add)
 {
-    char c;
-    c = mode[1];
-
-    if (mode[0] == '+')
+    if (add)
     {
-        if (modes.find(c) == modes.end())
-            modes.insert(pair<char, bool>(c, true));
+        if (modes.find(mode) == modes.end())
+            modes.insert(pair<char, bool>(mode, true));
         else
-            modes[c] = true;
+            modes[mode] = true;
     }
     else
     {
-        if (modes.find(c) == modes.end())
-            modes.insert(pair<char, bool>(c, false));
+        if (modes.find(mode) == modes.end())
+            modes.insert(pair<char, bool>(mode, false));
         else
-            modes[c] = false;
+            modes[mode] = false;
     }
+}
+
+Client *Channel::getCreator()
+{
+    return creator;
+}
+
+map<char, bool> Channel::getMode()
+{
+    return modes;
 }
