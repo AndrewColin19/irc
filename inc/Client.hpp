@@ -11,6 +11,7 @@ class Client
         int is_new;
         int is_connected;
         int fd;
+        int oper;
         struct sockaddr_in address;
     public:
         Client(int fd, struct sockaddr_in address);
@@ -24,6 +25,8 @@ class Client
         std::string getRealname();
         void setNickname(std::string nickname);
         std::string getNickname();
+        void setOper(int b);
+        int isOper();
         std::string	getAddress(void) const;
         int isNew();
         int isConnected();

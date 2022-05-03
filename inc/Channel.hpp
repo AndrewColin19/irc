@@ -7,6 +7,7 @@ class Channel
 {
     private:
         std::string name;
+        Client *creator;
         std::vector<Client*> users;
     public:
         Channel(string name);

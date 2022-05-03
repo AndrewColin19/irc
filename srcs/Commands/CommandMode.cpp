@@ -17,7 +17,7 @@ int CommandMode::exec(Client *c)
     else
     {
         if (!this->s->userExist(this->argv[0]))
-            return c->sendMessage(ERR_NOSUCHNICK, "No user find.");
+            return c->sendMessage(ERR_NOSUCHNICK, "Invalid user.");
         if (c->getNickname() != argv[0])
             return c->sendMessage(ERR_USERSDONTMATCH, "Invalid user.");
     }

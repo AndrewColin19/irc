@@ -1,6 +1,6 @@
 #include "Server.hpp"
 
-Server::Server(char *port, std::string password)
+Server::Server(char *port, std::string password, std::string opass)
 {
     struct addrinfo	hints;
     memset(&hints, 0, sizeof hints);
@@ -9,12 +9,14 @@ Server::Server(char *port, std::string password)
 	hints.ai_flags = AI_PASSIVE;
     getaddrinfo("127.0.0.1", port, &hints, &addr);
     this->password = password;
+    this->opass = opass;
 
     cmdManager.add("PASS", new CommandPass(this));
     cmdManager.add("USER", new CommandUser(this));
     cmdManager.add("NICK", new CommandNick(this));
     cmdManager.add("PING", new CommandPing(this));
     cmdManager.add("QUIT", new CommandQuit(this));
+    cmdManager.add("OPER", new CommandOper(this));
 
     chanManager.add("#Bienvenue");
 }
@@ -139,4 +141,9 @@ void Server::create_connection()
         max_fd = client;
     FD_SET(client, &set);
     users.insert(std::pair<int, Client*>(client, new Client(client, address)));
+}
+
+string  Server::getOPassword()
+{
+    return opass;
 }
