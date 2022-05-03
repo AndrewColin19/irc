@@ -13,6 +13,8 @@ class Channel
     public:
         Channel(string name);
         ~Channel();
+        bool isIn(string username);
         void setMode(string mode);
         void join(Client *c);
+        void kick(std::string username);
 };

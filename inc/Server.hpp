@@ -40,5 +40,7 @@ class Server
         int removeClient(int fd);
         string getPassword();
         string getOPassword();
+        bool chanExist(std::string chanName);
+        bool isInChan(std::string chanName, std::string username);
         ~Server();
 };

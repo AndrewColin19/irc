@@ -123,6 +123,24 @@ int Server::removeClient(int fd)
     return (0);
 }
 
+bool Server::chanExist(std::string chanName)
+{
+    if (chan.at(chanName))
+        return (true);
+    return (false);
+}
+
+bool Server::isInChan(std::string chanName, std::string username)
+{
+    if (chanExist(chanName))
+    {
+        if(chan.at(chanName)->isIn(username))
+            return (true);
+        return (false);
+    }
+    return (false);
+}
+
 int Server::userExist(string user)
 {
     for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
