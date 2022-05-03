@@ -10,6 +10,7 @@
 #include "Commands/CommandPing.hpp"
 #include "Commands/CommandQuit.hpp"
 #include "Commands/CommandOper.hpp"
+#include "Commands/CommandKick.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048
