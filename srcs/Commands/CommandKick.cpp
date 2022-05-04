@@ -20,6 +20,6 @@ int CommandKick::exec(Client *c)
         return c->sendMessage(ERR_USERNOTINCHANNEL, c->getNickname() + " " + argv[1] + " :They aren't on that channel");
     if (!this->s->isInChan(argv[0], c->getUsername()))
         return c->sendMessage(ERR_NOTONCHANNEL, "You're not on that channel");
-    this->s->getChannels().at(argv[0])->kick(argv[1]);
+    this->s->getChannels()[argv[0]]->kick(argv[1]);
     return c->sendRawMessage(c->to_string(false) + " KICK " + argv[0] + " " + argv[1]);
 }

@@ -16,3 +16,15 @@ void ChannelManager::join(string name, Client *c)
 {
     channels[name]->join(c);
 }
+
+map<string, Channel*> ChannelManager::getChannels()
+{
+    return channels;
+}
+
+bool ChannelManager::chanExist(std::string chanName)
+{
+    if (channels.find(chanName) == channels.end())
+        return false;
+    return true;
+}

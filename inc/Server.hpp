@@ -31,7 +31,6 @@ class Server
         CommandManager cmdManager;
         ChannelManager chanManager;
         std::map<int, Client*> users;
-        std::map<std::string, Channel*> chan;
         void create_connection();
         void check_action();
         int  get_fd();

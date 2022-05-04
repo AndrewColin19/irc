@@ -4,6 +4,8 @@ Channel::Channel(string name, Client *c)
 {
     this->name = name;
     creator = c;
+    if (c)
+        users.push_back(c);
 }
 
 Channel::~Channel()
@@ -16,13 +18,12 @@ void Channel::join(Client *c)
 
 bool Channel::isIn(std::string username)
 {
-    bool test = false;
     for (std::vector<Client *>::iterator it = users.begin(); it != users.end(); it++)
     {
         if ((*it)->getUsername() == username)
-            test = true;
+            return true;
     }
-    return (test);
+    return (false);
 }
 
 void Channel::kick(std::string username)

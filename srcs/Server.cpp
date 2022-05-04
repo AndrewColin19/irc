@@ -95,7 +95,7 @@ string Server::getPassword()
 
 std::map<std::string, Channel*> Server::getChannels()
 {
-    return this->chan;
+    return chanManager.getChannels();
 }
 
 std::map<int, Client*> Server::getClients()
@@ -105,26 +105,22 @@ std::map<int, Client*> Server::getClients()
 
 int Server::removeClient(int fd)
 {
-    if (this->users.at(fd))
-    {
-        this->users.erase(fd);
-        return (1);
-    }
-    return (0);
+    if (users.find(fd) == users.end())
+        return 0;
+    this->users.erase(fd);
+    return 1;
 }
 
 bool Server::chanExist(std::string chanName)
 {
-    if (chan.at(chanName))
-        return (true);
-    return (false);
+    return chanManager.chanExist(chanName);
 }
 
 bool Server::isInChan(std::string chanName, std::string username)
 {
     if (chanExist(chanName))
     {
-        if(chan.at(chanName)->isIn(username))
+        if(getChannels()[chanName]->isIn(username))
             return (true);
         return (false);
     }

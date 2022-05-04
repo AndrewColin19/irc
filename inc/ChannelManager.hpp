@@ -13,4 +13,6 @@ class ChannelManager
         ~ChannelManager();
         void add(string name, Client *c);
         void join(string name, Client *c);
+        map<string, Channel*> getChannels();
+        bool chanExist(std::string chanName);
 };
