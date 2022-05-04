@@ -23,13 +23,12 @@ int CommandJoin::exec(Client *c)
     splited.push_back(argv[0]);
     for (vector<string>::iterator it = splited.begin(); it != splited.end(); it++)
     {
-        printf("-------- %s -------\n", (*it).c_str());
         if ((*it)[0] == '#')
         {
             if (s->chanExist(*it))
-                printf("-------- tata -------\n"), s->getChannels()[*it]->join(c);
+                s->getChannels()[*it]->join(c);
             else
-                printf("-------- toto -------\n"), s->addChannel(*it, c);
+                s->addChannel(*it, c);
         }
         else
             return c->sendMessage(ERR_NOSUCHCHANNEL, argv[0] + ":No such channel");
