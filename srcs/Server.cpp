@@ -157,10 +157,15 @@ void Server::create_connection()
 
 ChannelManager Server::getChanManager()
 {
-    return this->chanManager;
+    return chanManager;
 }
 
 string  Server::getOPassword()
 {
     return opass;
+}
+
+void Server::addChannel(string name, Client *c)
+{
+    chanManager.add(name, c);
 }

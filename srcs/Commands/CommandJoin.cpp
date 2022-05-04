@@ -29,7 +29,7 @@ int CommandJoin::exec(Client *c)
             if (s->chanExist(*it))
                 printf("-------- tata -------\n"), s->getChannels()[*it]->join(c);
             else
-                printf("-------- toto -------\n"), s->getChanManager().add((*it), c);
+                printf("-------- toto -------\n"), s->addChannel(*it, c);
         }
         else
             return c->sendMessage(ERR_NOSUCHCHANNEL, argv[0] + ":No such channel");

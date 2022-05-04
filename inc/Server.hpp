@@ -46,6 +46,7 @@ class Server
         ChannelManager getChanManager();
         bool chanExist(std::string chanName);
         bool isInChan(std::string chanName, std::string username);
+        void addChannel(string name, Client *c);
         Client *getUser(string user);
         ~Server();
 };
