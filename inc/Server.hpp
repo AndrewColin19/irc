@@ -44,6 +44,7 @@ class Server
         int removeClient(int fd);
         string getPassword();
         string getOPassword();
+        ChannelManager getChanManager();
         bool chanExist(std::string chanName);
         bool isInChan(std::string chanName, std::string username);
         Client *getUser(string user);

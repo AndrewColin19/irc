@@ -171,6 +171,11 @@ void Server::create_connection()
     users.insert(std::pair<int, Client*>(client, new Client(client, address)));
 }
 
+ChannelManager Server::getChanManager()
+{
+    return this->chanManager;
+}
+
 string  Server::getOPassword()
 {
     return opass;
