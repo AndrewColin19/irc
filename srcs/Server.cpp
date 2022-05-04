@@ -18,6 +18,7 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("QUIT", new CommandQuit(this));
     cmdManager.add("OPER", new CommandOper(this));
     cmdManager.add("KICK", new CommandKick(this));
+    cmdManager.add("MODE", new CommandMode(this));
 
     chanManager.add("#Bienvenue", NULL);
 }
@@ -148,6 +149,14 @@ int Server::userExist(string user)
         if(it->second->getUsername() == user)
             return (1);
     return (0);
+}
+
+Client *Server::getUser(string user)
+{
+    for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
+        if(it->second->getUsername() == user)
+            return (it->second);
+    return (NULL);
 }
 
 void Server::create_connection()

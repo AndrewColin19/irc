@@ -26,9 +26,9 @@ int CommandMode::exec(Client *c)
         return c->sendMessage(ERR_NEEDMOREPARAMS, "Invalid params count.");
     if (this->argv[0][0] == '#')
     {
-        Channel *chan = (*s->getChannels().find(argv[0])).second;
-        if (chan == (*s->getChannels().end()).second)
+        if (!s->chanExist(argv[0]))
             return c->sendMessage(ERR_NOSUCHCHANNEL, "Invalid channel.");
+        Channel *chan = (*s->getChannels().find(argv[0])).second;
         if (argv.size() == 1)
             return c->sendMessage(RPL_CHANNELMODEIS, modesToString(chan->getMode()));
         if (c != chan->getCreator() || c->isOper())

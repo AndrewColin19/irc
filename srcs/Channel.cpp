@@ -64,3 +64,9 @@ map<char, bool> Channel::getMode()
 {
     return modes;
 }
+
+void Channel::sendOnChannel(string msg)
+{
+    for (int i = 0; i < users.size(); i++)
+        users[i]->sendRawMessage(msg);
+}

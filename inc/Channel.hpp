@@ -17,6 +17,7 @@ class Channel
         void setMode(char mode, int add);
         void join(Client *c);
         void kick(std::string username);
+        void sendOnChannel(string msg);
         map<char, bool> getMode();
         Client *getCreator();
 };

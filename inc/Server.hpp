@@ -11,6 +11,9 @@
 #include "Commands/CommandQuit.hpp"
 #include "Commands/CommandOper.hpp"
 #include "Commands/CommandKick.hpp"
+#include "Commands/CommandMode.hpp"
+#include "Commands/CommandPrivmsg.hpp"
+#include "Commands/CommandJoin.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048
@@ -43,5 +46,6 @@ class Server
         string getOPassword();
         bool chanExist(std::string chanName);
         bool isInChan(std::string chanName, std::string username);
+        Client *getUser(string user);
         ~Server();
 };

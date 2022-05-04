@@ -7,7 +7,6 @@ Client::Client(int fd, struct sockaddr_in address)
 {
     is_new = 1;
     is_connected = 0;
-    oper = 0;
     this->fd = fd;
     this->address = address;
 }
