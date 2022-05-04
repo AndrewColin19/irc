@@ -17,7 +17,7 @@ int CommandJoin::exec(Client *c)
     size_t pos = 0;
     while ((pos = argv[0].find(',')) != std::string::npos) 
     {
-        splited.insert(argv[0].substr(0, pos));
+        splited.push_back(argv[0].substr(0, pos));
         argv[0].erase(0, pos + 1);
     }
     for (std::vector<std::string>::iterator it = splited.begin(); it != splited.end(); it++)

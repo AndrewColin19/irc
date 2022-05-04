@@ -1,14 +1,14 @@
 #include "Commands/CommandKick.hpp"
 
-CommandQuit::CommandQuit(Server *srv)
+CommandKick::CommandKick(Server *srv)
 {
 	this->s = srv;
 }
 
-CommandQuit::~CommandQuit() 
+CommandKick::~CommandKick() 
 {}
 
-int CommandQuit::exec(Client *c)
+int CommandKick::exec(Client *c)
 {
     if (this->argv.size() != 2)
         return c->sendMessage(ERR_NEEDMOREPARAMS, "Not enough parameters");

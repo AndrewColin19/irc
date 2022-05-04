@@ -15,7 +15,7 @@ int main(int ac, char **av)
         std::cout << "Error : Port invalid." << std::endl;
         return 0;
     }
-    Server *s = new Server(av[1], av[2]);
+    Server *s = new Server(av[1], av[2], "abcdef");
     s->start();
     return 1;
 }

@@ -19,8 +19,8 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("OPER", new CommandOper(this));
     cmdManager.add("KICK", new CommandKick(this));
     cmdManager.add("MODE", new CommandMode(this));
-    cmdManager.add("MODE", new CommandPrivmsg(this));
-    cmdManager.add("MODE", new CommandJoin(this));
+    cmdManager.add("PRIVMSG", new CommandPrivmsg(this));
+    cmdManager.add("JOIN", new CommandJoin(this));
 
     chanManager.add("#Bienvenue", NULL);
 }
@@ -87,20 +87,6 @@ void Server::check_action()
         }
     }
 }
-/*
-void Server::initUser(string str, int fd)
-{
-    size_t pos;
-    string user;
-
-    if ((pos = str.find("NICK")) == string::npos)
-        return ;
-    user = str.substr(pos + 5, str.find("USER") - 2);
-    if (this->userExist(user) || user.length() <= 1) 
-        return ;
-    users[fd]->setUsername(user);
-    send(fd, "001 lmataris :Welcome to the Internet Relay Network lmataris\n", strlen("001 lmataris :Welcome to the Internet Relay Network lmataris\n"), 0);
-}*/
 
 string Server::getPassword()
 {

@@ -26,6 +26,7 @@ int CommandPrivmsg::exec(Client *c)
         if (!s->userExist(argv[0]))
             return c->sendMessage(ERR_NOSUCHNICK, "Invalid user.");
         Client *u = s->getUser(argv[0]);
-        return u->sendRawMessage(c->to_string(false) + " PRIVMSG " + u->getNickname() + " :" + str);
+        u->sendRawMessage(c->to_string(false) + " PRIVMSG " + u->getNickname() + " :" + str);
     }
+    return 0;
 }
