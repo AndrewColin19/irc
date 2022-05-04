@@ -19,6 +19,8 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("OPER", new CommandOper(this));
     cmdManager.add("KICK", new CommandKick(this));
     cmdManager.add("MODE", new CommandMode(this));
+    cmdManager.add("MODE", new CommandPrivmsg(this));
+    cmdManager.add("MODE", new CommandJoin(this));
 
     chanManager.add("#Bienvenue", NULL);
 }
