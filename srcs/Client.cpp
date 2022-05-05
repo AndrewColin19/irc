@@ -9,6 +9,7 @@ Client::Client(int fd, struct sockaddr_in address)
     is_connected = 0;
     this->fd = fd;
     this->address = address;
+    this->isPass = 0;
 }
 
 void Client::setUsername(std::string username)
@@ -130,4 +131,14 @@ void Client::setMode(char mode, int add)
 map<char, bool> Client::getMode()
 {
     return modes;
+}
+
+int Client::isPassed()
+{
+    return isPass;
+}
+
+void Client::setPass()
+{
+    isPass = 1;
 }

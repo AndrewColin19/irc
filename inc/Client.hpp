@@ -10,6 +10,7 @@ class Client
         std::string nickname;
         int is_new;
         int is_connected;
+        int isPass;
         int fd;
         map<char, bool> modes;
         struct sockaddr_in address;
@@ -31,6 +32,8 @@ class Client
         void setMode(char mode, int add);
         map<char, bool> getMode();
         int isConnected();
+       int isPassed();
+        void setPass(); 
         int getFd();
         void connect();
         std::string	to_string(bool isAnon) const;
