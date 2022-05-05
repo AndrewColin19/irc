@@ -43,8 +43,8 @@ CommandNick::~CommandNick()
 
 int CommandNick::exec(Client *c)
 {
-    if (c->isConnected()) //&& c->isMode('r'))
-		return !c->sendMessage(ERR_RESTRICTED, "Your connection is restricted!");
+   /*if (c->isConnected()) //&& c->isMode('r'))
+		return !c->sendMessage(ERR_RESTRICTED, "Your connection is restricted!");*/
 
 	if (this->argv.size() != 1 || this->argv[0].length() == 0)
 		return !c->sendMessage(ERR_NONICKNAMEGIVEN, "Not nickname given");

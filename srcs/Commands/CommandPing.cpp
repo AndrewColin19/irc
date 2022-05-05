@@ -12,5 +12,6 @@ int CommandPing::exec(Client *c)
 {
     if (this->argv.size() == 0)
         return !c->sendMessage(ERR_NEEDMOREPARAMS, "Not enough parameters");
-    return c->sendRawMessage("PONG :ft_irc");
+    cout << "PONG" << endl;
+    return c->sendRawMessage("PONG ft_irc");
 }

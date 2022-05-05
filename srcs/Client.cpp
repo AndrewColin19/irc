@@ -80,7 +80,10 @@ int Client::sendMessage(string err_code, string msg)
 
 int Client::sendRawMessage(std::string message)
 {
-    send(this->fd, message.c_str(), message.length(), 0);
+    stringstream c;
+    c << message << "\n";
+    cout << c.str() << endl;
+    send(fd, c.str().c_str(), c.str().length(), 0);
     return 1;
 }
 

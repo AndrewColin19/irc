@@ -66,8 +66,9 @@ map<char, bool> Channel::getMode()
     return modes;
 }
 
-void Channel::sendOnChannel(string msg)
+void Channel::sendOnChannel(string msg, Client *sender)
 {
     for (size_t i = 0; i < users.size(); i++)
-        users[i]->sendRawMessage(msg);
+        if (users[i] != sender)
+            users[i]->sendRawMessage(msg);
 }
