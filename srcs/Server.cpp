@@ -21,6 +21,7 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("MODE", new CommandMode(this));
     cmdManager.add("PRIVMSG", new CommandPrivmsg(this));
     cmdManager.add("JOIN", new CommandJoin(this));
+    cmdManager.add("PART", new CommandPart(this));
 
     chanManager.add("#Bienvenue", NULL);
 }

@@ -26,9 +26,16 @@ int CommandJoin::exec(Client *c)
         if ((*it)[0] == '#')
         {
             if (s->chanExist(*it))
-                s->getChannels()[*it]->join(c);
+            {
+                if (s->isInChan(*it, c->getNickname()))
+                    return c->sendMessage(ERR_ALREADYINCHANNEL, c->getNickname() + " " + *it + " :You're already in this channel");
+                Channel *chan = s->getChannels()[*it];
+                chan->join(c);
+                chan->sendOnChannel(c->to_string(false) + " JOIN " + *it, c);
+            }
             else
                 s->addChannel(*it, c);
+            s->getChannels()[*it]->sendOnChannel(c->to_string(false) + " JOIN " + *it, c);
         }
         else
             return c->sendMessage(ERR_NOSUCHCHANNEL, argv[0] + ":No such channel");
