@@ -12,11 +12,11 @@ int CommandPass::exec(Client *c)
 {
     cout << "START" << endl;
     if (c->isPassed())
-        return c->sendMessage(ERR_ALREADYREGISTRED, "Unauthorized command (already registered)");
+        return c->sendMessage(ERR_ALREADYREGISTRED, ":Unauthorized command (already registered)");
     if (argv.size() < 1)
-        return c->sendMessage(ERR_NEEDMOREPARAMS, "Not enough parameters");
+        return c->sendMessage(ERR_NEEDMOREPARAMS, ":Not enough parameters");
     if (s->getPassword() != argv[0])
-        return c->sendMessage(ERR_PASSWDMISMATCH, "Password incorrect");
+        return c->sendMessage(ERR_PASSWDMISMATCH, ":Password incorrect");
     c->setPass();
     return 0;
 }

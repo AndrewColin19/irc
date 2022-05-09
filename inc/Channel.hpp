@@ -18,6 +18,7 @@ class Channel
         void join(Client *c);
         void kick(std::string username);
         void sendOnChannel(string msg, Client *sender, int send);
+        std::string	listUsers();
         map<char, bool> getMode();
         Client *getCreator();
 };

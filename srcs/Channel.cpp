@@ -72,3 +72,15 @@ void Channel::sendOnChannel(string msg, Client *sender, int send)
         if (send || users[i] != sender)
             users[i]->sendRawMessage(msg);
 }
+
+string	Channel::listUsers()
+{
+	stringstream list;
+    for (std::vector<Client *>::iterator it = users.begin(); it != users.end(); it++)
+    {
+        if ((*it)->isOper())
+            list << "@";
+        list << (*it)->getNickname() << " ";
+    }
+	return list.str();
+}

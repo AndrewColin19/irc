@@ -108,7 +108,14 @@ int Server::removeClient(int fd)
 {
     if (users.find(fd) == users.end())
         return 0;
+    FD_CLR(fd, &set);
     this->users.erase(fd);
+    if (max_fd == fd)
+    {
+        while (!FD_ISSET(fd, &set))
+            fd--;
+        max_fd = fd;
+    }
     return 1;
 }
 

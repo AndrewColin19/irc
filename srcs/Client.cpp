@@ -72,16 +72,14 @@ int Client::sendMessage(string err_code, string msg)
 {
     stringstream c;
 
-    c << ":ft_irc " << err_code << " " << this->username << ":" << msg << "\n";
-    cout << c.str() << endl;
-    send(fd, c.str().c_str(), c.str().length(), 0);
-    return 1;
+    c << ":ft_irc " << err_code << " " << this->username << " " << msg;
+    return sendRawMessage(c.str());
 }
 
 int Client::sendRawMessage(std::string message)
 {
     stringstream c;
-    c << message << "\n";
+    c << message << "\r\n";
     cout << c.str() << endl;
     send(fd, c.str().c_str(), c.str().length(), 0);
     return 1;

@@ -11,7 +11,7 @@ CommandJoin::~CommandJoin()
 int CommandJoin::exec(Client *c)
 {
     if (argv.size() != 1)
-        return c->sendMessage(ERR_NEEDMOREPARAMS, "Not enough parameters");
+        return c->sendMessage(ERR_NEEDMOREPARAMS, ":Not enough parameters");
 
     vector<string> splited;
     size_t pos = 0;
@@ -34,7 +34,10 @@ int CommandJoin::exec(Client *c)
             }
             else
                 s->addChannel(*it, c);
+            Channel *chan = s->getChannels()[*it];
             s->getChannels()[*it]->sendOnChannel(c->to_string(false) + " JOIN " + *it, c, 1);
+            c->sendMessage(RPL_NAMREPLY, "= " + *it + " :" + chan->listUsers());
+	        c->sendMessage(RPL_ENDOFNAMES, *it + " :End of NAMES list");
         }
         else
             return c->sendMessage(ERR_NOSUCHCHANNEL, argv[0] + ":No such channel");

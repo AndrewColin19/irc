@@ -47,14 +47,14 @@ int CommandNick::exec(Client *c)
 		return !c->sendMessage(ERR_RESTRICTED, "Your connection is restricted!");*/
 
 	if (this->argv.size() != 1 || this->argv[0].length() == 0)
-		return !c->sendMessage(ERR_NONICKNAMEGIVEN, "Not nickname given");
+		return !c->sendMessage(ERR_NONICKNAMEGIVEN, ":Not nickname given");
 
 	if (!checkNicknameValidity(this->argv[0])
 		|| checkNicknameAnonymous(this->s->getChannels(), this->argv[0]))
-		return !c->sendMessage(ERR_ERRONEUSNICKNAME, "Erroneous nickname");
+		return !c->sendMessage(ERR_ERRONEUSNICKNAME, ":Erroneous nickname");
 
 	if (!checkNicknameAvailability(this->s, this->argv[0]))
-		return !c->sendMessage(ERR_NICKNAMEINUSE, "Nickname is already in use");
+		return !c->sendMessage(ERR_NICKNAMEINUSE, ":Nickname is already in use");
 
 	if (!c->getNickname().empty())
 		c->sendRawMessage(c->to_string(false) + " NICK :" + this->argv[0]);
