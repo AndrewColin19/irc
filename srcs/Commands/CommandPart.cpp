@@ -19,8 +19,8 @@ int CommandPart::exec(Client *c)
         if (!this->s->isInChan(argv[0], c->getNickname()))
             return c->sendMessage(ERR_USERNOTINCHANNEL, c->getNickname() + " " + argv[1] + " :They aren't on that channel");
         Channel *chan = s->getChannels()[argv[0]];
-        chan->sendOnChannel(c->to_string(false) + " PART " + argv[0], c);
-        chan->removeUser(c);
+        chan->sendOnChannel(c->to_string(false) + " PART " + argv[0], c, 1);
+        chan->kick(c->getUsername());
     }
     return 0;
 }
