@@ -1,14 +1,14 @@
-#include "Commands/CommandJoin.hpp"
+#include "Commands/CommandNames.hpp"
 
-CommandJoin::CommandJoin(Server *srv)
+CommandNames::CommandNames(Server *srv)
 {
     this->s = srv;
 }
 
-CommandJoin::~CommandJoin()
+CommandNames::~CommandNames()
 {}
 
-int CommandJoin::exec(Client *c)
+int CommandNames::exec(Client *c)
 {
     if (argv.size() != 1)
         return c->sendMessage(ERR_NEEDMOREPARAMS, ":Not enough parameters");

@@ -37,5 +37,5 @@ int CommandList::exec(Client *c)
             
         }
     }
-    c->sendMessage(RPL_LISTEND, ":End of /LIST");
+    return c->sendMessage(RPL_LISTEND, ":End of /LIST");
 }

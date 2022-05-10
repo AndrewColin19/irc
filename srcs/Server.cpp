@@ -24,6 +24,7 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("PART", new CommandPart(this));
     cmdManager.add("NAMES", new CommandNames(this));
     cmdManager.add("LIST", new CommandList(this));
+    cmdManager.add("INVITE", new CommandInvite(this));
 
     chanManager.add("#Bienvenue", NULL);
 }
