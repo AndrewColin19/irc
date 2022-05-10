@@ -36,6 +36,8 @@ int CommandJoin::exec(Client *c)
                 s->addChannel(*it, c);
             Channel *chan = s->getChannels()[*it];
             s->getChannels()[*it]->sendOnChannel(c->to_string(false) + " JOIN " + *it, c, 1);
+            if (!chan->getTopic().empty())
+                c->sendMessage(RPL_TOPIC, *it + " :" + chan->getTopic());
             c->sendMessage(RPL_NAMREPLY, "= " + *it + " :" + chan->listUsers());
 	        c->sendMessage(RPL_ENDOFNAMES, *it + " :End of NAMES list");
         }
