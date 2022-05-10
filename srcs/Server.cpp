@@ -138,7 +138,7 @@ bool Server::isInChan(std::string chanName, std::string username)
 int Server::userExist(string user)
 {
     for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
-        if(it->second->getUsername() == user)
+        if(it->second->getNickname() == user)
             return (1);
     return (0);
 }
@@ -146,7 +146,7 @@ int Server::userExist(string user)
 Client *Server::getUser(string user)
 {
     for (std::map<int, Client *>::iterator it = users.begin(); it != users.end(); ++it)
-        if(it->second->getUsername() == user)
+        if(it->second->getNickname() == user)
             return (it->second);
     return (NULL);
 }
