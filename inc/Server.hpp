@@ -15,6 +15,8 @@
 #include "Commands/CommandPrivmsg.hpp"
 #include "Commands/CommandJoin.hpp"
 #include "Commands/CommandPart.hpp"
+#include "Commands/CommandNames.hpp"
+#include "Commands/CommandList.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048

@@ -7,6 +7,7 @@ class Channel
 {
     private:
         std::string name;
+        string topic;
         Client *creator;
         map<char, bool> modes;
         std::vector<Client*> users;
@@ -21,4 +22,7 @@ class Channel
         std::string	listUsers();
         map<char, bool> getMode();
         Client *getCreator();
+        string getTopic();
+        void setTopic(string topic);
+        vector<Client*> getUsers();
 };

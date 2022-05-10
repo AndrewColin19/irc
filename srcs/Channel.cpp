@@ -84,3 +84,18 @@ string	Channel::listUsers()
     }
 	return list.str();
 }
+
+string Channel::getTopic()
+{
+    return topic;
+}
+
+void Channel::setTopic(string topic)
+{
+    this->topic = topic;
+}
+
+vector<Client*> Channel::getUsers()
+{
+    return users;
+}
