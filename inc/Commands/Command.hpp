@@ -8,6 +8,7 @@ class Command
         std::vector<std::string> argv;
         std::string cmd;
         std::string str;
+        int isstr;
     public:
         int getCommand(std::string str, Client *c);
         virtual int exec(Client *c) = 0;

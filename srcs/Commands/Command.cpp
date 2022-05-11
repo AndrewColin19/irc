@@ -4,6 +4,7 @@ int Command::getCommand(string str, Client *c)
 {
     size_t pos = 0;
     string token;
+    isstr = 0;
     cmd = "";
     this->str = "";
     if (argv.size() > 0)
@@ -12,6 +13,7 @@ int Command::getCommand(string str, Client *c)
     {
         this->str = str.substr(pos + 1);
         str.erase(pos);
+        isstr = 1;
     }
     pos = str.find(' ');
     this->cmd = str.substr(0, pos);

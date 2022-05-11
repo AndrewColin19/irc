@@ -7,7 +7,8 @@ class Channel
 {
     private:
         std::string name;
-        string topic;
+        string topic, topicSetter;
+        time_t topicSetted;
         Client *creator;
         map<char, bool> modes;
         std::vector<Client*> users;
@@ -24,5 +25,9 @@ class Channel
         Client *getCreator();
         string getTopic();
         void setTopic(string topic);
+        string getTopicSetter();
+        void setTopicSetter(string user);
+        time_t getTopicSetted();
+        void setTopicSetter();
         vector<Client*> getUsers();
 };

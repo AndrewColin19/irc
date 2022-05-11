@@ -10,14 +10,15 @@ CommandMode::~CommandMode()
 
 string modesToString(map<char, bool> mode)
 {
-    string m = "";
+    stringstream m;
 
+    m << " ";
     for (map<char, bool>::iterator i = mode.begin(); i != mode.end(); i++)
     {
         if ((*i).second)
-            m.append("+"), m.append(1, (*i).first), m.append(" ");
+            m << "+" << (*i).first << " ";
     }
-    return m;
+    return m.str();
 }
 
 int CommandMode::exec(Client *c)
@@ -33,16 +34,10 @@ int CommandMode::exec(Client *c)
             return c->sendMessage(RPL_CHANNELMODEIS, modesToString(chan->getMode()));
         if (c != chan->getCreator() || !c->isOper())
             return c->sendMessage(ERR_CHANOPRIVSNEEDED, ":Invalid privileges on the channel.");
-        for (size_t i = 1; i < argv[1].size(); i++)
-        {
-            if (argv[1][i] == 'i' || argv[1][i] == 'o' ||argv[1][i] == 'O' ||argv[1][i] == 'r' || argv[1][i] == 'w')
-            {
-                if (argv[1][0] == '+')
-                    c->setMode(argv[1][i], 1);
-                else if (argv[1][0] == '-')
-                    c->setMode(argv[1][i], 0);
-            }
-        } 
+        if (argv[1][0] == '+')
+            c->setMode(argv[1][1], 1);
+        else if (argv[1][0] == '-')
+            c->setMode(argv[1][1], 0);
     }
     else
     {
@@ -51,17 +46,11 @@ int CommandMode::exec(Client *c)
         if (c->getNickname() != argv[0])
             return c->sendMessage(ERR_USERSDONTMATCH, ":Invalid user.");
         if (argv.size() == 1)
-            return c->sendMessage(RPL_UMODEIS, modesToString(c->getMode()));
-        for (size_t i = 1; i < argv[1].size(); i++)
-        {
-            if (argv[1][i] == 'b' || argv[1][i] == 'e' ||argv[1][i] == 'l' ||argv[1][i] == 'i' || argv[1][i] == 'I' || argv[1][i] == 'k' || argv[1][i] == 'm' || argv[1][i] == 's')
-            {
-                if (argv[1][0] == '+')
-                    c->setMode(argv[1][i], 1);
-                else if (argv[1][0] == '-')
-                    c->setMode(argv[1][i], 0);
-            }
-        } 
+            return c->sendMessage(RPL_UMODEIS, argv[0] + modesToString(c->getMode()));
+        if (argv[1][0] == '+')
+            c->setMode(argv[1][1], 1);
+        else if (argv[1][0] == '-')
+            c->setMode(argv[1][1], 0);
     }
-    return 0;
+    return c->sendRawMessage(c->to_string(false) + " MODE " + argv[0] + " " + argv[1][0] + argv[1][1]);
 }

@@ -99,3 +99,23 @@ vector<Client*> Channel::getUsers()
 {
     return users;
 }
+
+string Channel::getTopicSetter()
+{
+    return topicSetter;
+}
+
+void Channel::setTopicSetter(string user)
+{
+    topicSetter = user;
+}
+
+time_t Channel::getTopicSetted()
+{
+    return topicSetted;
+}
+
+void Channel::setTopicSetter()
+{
+    topicSetted = time(0);
+}
