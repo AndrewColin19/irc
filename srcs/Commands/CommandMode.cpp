@@ -29,15 +29,15 @@ int CommandMode::exec(Client *c)
     {
         if (!s->chanExist(argv[0]))
             return c->sendMessage(ERR_NOSUCHCHANNEL, ":Invalid channel.");
-        Channel *chan = (*s->getChannels().find(argv[0])).second;
+        Channel *chan = s->getChannels().at(argv[0]);
         if (argv.size() == 1)
             return c->sendMessage(RPL_CHANNELMODEIS, modesToString(chan->getMode()));
         if (c != chan->getCreator() || !c->isOper())
             return c->sendMessage(ERR_CHANOPRIVSNEEDED, ":Invalid privileges on the channel.");
         if (argv[1][0] == '+')
-            c->setMode(argv[1][1], 1);
+            chan->setMode(argv[1][1], 1);
         else if (argv[1][0] == '-')
-            c->setMode(argv[1][1], 0);
+            chan->setMode(argv[1][1], 0);
     }
     else
     {
