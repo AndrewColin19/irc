@@ -17,7 +17,7 @@ int CommandManager::exec(string str, Client *c)
 
     cout << str << endl;
     cmd = str.substr(0, str.find(' '));
-    if (cmd == "CAP")
+    if (cmd == "CAP" || cmd == "WHO")
         return 0;
     else if (!c->isPassed())
     {

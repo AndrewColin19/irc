@@ -26,6 +26,7 @@ Server::Server(char *port, std::string password, std::string opass)
     cmdManager.add("LIST", new CommandList(this));
     cmdManager.add("INVITE", new CommandInvite(this));
     cmdManager.add("TOPIC", new CommandTopic(this));
+    cmdManager.add("NOTICE", new CommandNotice(this));
 
     chanManager.add("#Bienvenue", NULL);
 }
@@ -64,32 +65,37 @@ void Server::check_action()
 {
     char buff[MAX_MSIZE];
     ssize_t nbread = 0;
-    int fd = this->get_fd();
+    int fd;
 
-    if (fd == sock)
-        create_connection();
-    else
+    while ((fd = this->get_fd()) <= max_fd)
     {
-        memset(buff, 0, sizeof buff);
-        nbread = recv(fd, buff, MAX_MSIZE, 0);
-        if (nbread <= 0)
-        {
-            close(fd);
-            FD_CLR(fd, &set);
-            users.erase(users.find(fd));
-        }
+        if (fd == sock)
+            create_connection();
         else
         {
-            size_t pos = 0;
-            std::string c;
-            string str(buff);
-            while ((pos = str.find('\n')) != std::string::npos)
+            memset(buff, 0, sizeof buff);
+            nbread = recv(fd, buff, MAX_MSIZE, 0);
+            if (nbread <= 0)
             {
-                c = str.substr(0, pos);
-                str.erase(0, pos + 1);
-                cmdManager.exec(c, users[fd]);
+                cout << "------------------------------\n";
+                close(fd);
+                FD_CLR(fd, &set);
+                users.erase(users.find(fd));
+            }
+            else
+            {
+                size_t pos = 0;
+                std::string c;
+                string str(buff);
+                while ((pos = str.find('\n')) != std::string::npos)
+                {
+                    c = str.substr(0, pos);
+                    str.erase(0, pos + 1);
+                    cmdManager.exec(c, users[fd]);
+                }
             }
         }
+        FD_CLR(fd, &save);
     }
 }
 

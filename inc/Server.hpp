@@ -19,6 +19,7 @@
 #include "Commands/CommandList.hpp"
 #include "Commands/CommandInvite.hpp"
 #include "Commands/CommandTopic.hpp"
+#include "Commands/CommandNotice.hpp"
 #include "ChannelManager.hpp"
 
 #define MAX_MSIZE 2048
