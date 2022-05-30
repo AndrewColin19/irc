@@ -80,7 +80,7 @@ void Server::check_action()
             {
                 cmdManager.exec("QUIT :Connection interrupted", users[fd]);
             }
-            else if (str.find('\n'))
+            else if (str.find('\n') != string::npos)
             {
                 size_t pos = 0;
                 std::string c;
