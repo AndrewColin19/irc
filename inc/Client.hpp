@@ -17,6 +17,7 @@ class Client
     public:
         Client(int fd, struct sockaddr_in address);
         int sendMessage(string err_code, string msg);
+        string message;
         int sendRawMessage(std::string message);
         void setUsername(std::string username);
         std::string getUsername();

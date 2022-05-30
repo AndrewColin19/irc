@@ -28,7 +28,5 @@ int CommandQuit::exec(Client *c)
         b++;
     }
     this->s->removeClient(c->getFd());
-    close(c->getFd());
-    delete c;
     return 0;
 }

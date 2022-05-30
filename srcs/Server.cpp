@@ -75,25 +75,27 @@ void Server::check_action()
         {
             memset(buff, 0, sizeof buff);
             nbread = recv(fd, buff, MAX_MSIZE, 0);
+            string str(buff);
             if (nbread <= 0)
             {
-                cout << "------------------------------\n";
-                close(fd);
-                FD_CLR(fd, &set);
-                users.erase(users.find(fd));
+                cmdManager.exec("QUIT :Connection interrupted", users[fd]);
             }
-            else
+            else if (str.find('\n'))
             {
                 size_t pos = 0;
                 std::string c;
-                string str(buff);
-                while ((pos = str.find('\n')) != std::string::npos)
+                string message = users[fd]->message + str;
+                while ((pos = message.find('\n')) != std::string::npos)
                 {
-                    c = str.substr(0, pos);
-                    str.erase(0, pos + 1);
+                    c = message.substr(0, pos);
+                    message.erase(0, pos + 1);
                     cmdManager.exec(c, users[fd]);
                 }
+                if (FD_ISSET(fd, &set))
+                    users[fd]->message = "";
             }
+            else
+                users[fd]->message += str;
         }
         FD_CLR(fd, &save);
     }
@@ -118,6 +120,7 @@ int Server::removeClient(int fd)
 {
     if (users.find(fd) == users.end())
         return 0;
+    Client *c = users[fd];
     FD_CLR(fd, &set);
     this->users.erase(fd);
     if (max_fd == fd)
@@ -126,6 +129,8 @@ int Server::removeClient(int fd)
             fd--;
         max_fd = fd;
     }
+    close(c->getFd());
+    delete c;
     return 1;
 }
 
